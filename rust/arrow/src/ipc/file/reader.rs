@@ -32,7 +32,7 @@ use DataType::*;
 static ARROW_MAGIC: [u8; 6] = [b'A', b'R', b'R', b'O', b'W', b'1'];
 
 /// Read a buffer based on offset and length
-fn read_buffer(buf: &ipc::Buffer, a_data: &Vec<u8>) -> Buffer {
+fn read_buffer(buf: &ipc::Buffer, a_data: &[u8]) -> Buffer {
     let start_offset = buf.offset() as usize;
     let end_offset = start_offset + buf.length() as usize;
     let buf_data = &a_data[start_offset..end_offset];
@@ -51,7 +51,7 @@ fn read_buffer(buf: &ipc::Buffer, a_data: &Vec<u8>) -> Buffer {
 fn create_array(
     nodes: &[ipc::FieldNode],
     data_type: &DataType,
-    data: &Vec<u8>,
+    data: &[u8],
     buffers: &[ipc::Buffer],
     mut node_index: usize,
     mut buffer_index: usize,
@@ -329,8 +329,8 @@ fn create_list_array(
 }
 
 /// Creates a record batch from binary data using the `ipc::RecordBatch` indexes and the `Schema`
-fn read_record_batch(
-    buf: &Vec<u8>,
+pub fn read_record_batch(
+    buf: &[u8],
     batch: ipc::RecordBatch,
     schema: Arc<Schema>,
 ) -> Result<Option<RecordBatch>> {

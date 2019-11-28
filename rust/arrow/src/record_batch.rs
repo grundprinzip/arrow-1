@@ -28,7 +28,7 @@ use crate::datatypes::*;
 use crate::error::{ArrowError, Result};
 
 /// A batch of column-oriented data
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub struct RecordBatch {
     schema: Arc<Schema>,
     columns: Vec<Arc<Array>>,
